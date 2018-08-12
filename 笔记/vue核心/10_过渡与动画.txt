@@ -1,0 +1,29 @@
+
+---------------------------------------- VcrT ----------------------------------------
+VUE动画的理解:
+    1、操作的css的transition 和 animation
+    2、vue会给目标元素添加/移除特定的class
+    3、过渡的相关类名:
+        xxx-enter-active: 指定显示的transition
+        xxx-leave-activate: 指定隐藏的transition
+        xxx-enter/xxx-leave-to: 指定隐藏的
+   
+---------------------------------------- VcrT ---------------------------------------- 
+使用:
+    <transition name="xxx">
+        需要动画效果的内容
+    </transition>
+
+    <style>
+        .xxx-enter-active, .xxx-leave-active {
+            transition: opacity .5s;
+        }
+        .xxx-enter, .xxx-leave-to {
+            opacity: 0;
+        }
+    </style
+
+---------------------------------------- VcrT ----------------------------------------
+例子:
+    10_transition_animation.html
+

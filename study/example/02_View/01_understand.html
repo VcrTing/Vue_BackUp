@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <title>view</title>
+    </head>
+    <script src="../../jquery_3.min.js" type="text/javascript"></script>
+    <script src="../../vue/vue.js" type="text/javascript"></script>
+    <body>
+        <div id="app"><!-- VIEW -->
+            <p>双大括号表达式:</p>
+            <p v-text="vcr"></p>
+            <p>{{ ht.toUpperCase() }} (使用 toUpperCase 转大写)</p>
+            <p v-html="ht"></p>
+
+            <hr/>
+            <p>演示 数据绑定 v-bind:src</p>
+            <!-- img v-bind:src="img_url" style="height: 320px;" -->
+            <img :src="img_url" style="height: 320px;">
+
+            <hr/>
+            <p>绑定事件监听: v-on:click="methods"</p>
+            <!--button v-on:click="ckFun"></button-->
+            <button @click="ckFun('vcr')">点击</button>
+        </div>
+        <script type="text/javascript">
+            // 创建实例
+            const vm = new Vue({ // 配置对象
+                el: '#app', // 元素：选择器
+                data:{ // 数据（MODEL）
+                    vcr: 'VcrT', // 演示 双大括号 表达式
+                    ht: '<a herf="#">刷新</a>', // 演示 v-html
+
+                    img_url: 'D:\\Code\\WEBs\\Vue_Study\\study\\media\\img\\lover.jpg' // 演示数据绑定
+                },
+                methods: {
+                    ckFun (param) {
+                        alert('You Click the '+ param +' Button !!!');
+                    }
+                }
+            });
+            vm.vcr = 'VcrTing'
+        </script>
+    </body>
+</html>

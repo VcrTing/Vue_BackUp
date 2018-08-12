@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>计算属性与监视</title>
+    </head>
+    <script src="../../jquery_3.min.js" type="text/javascript"></script>
+    <script src="../../vue/vue.js" type="text/javascript"></script>
+    <body>
+        <div id="app"><!-- VIEW -->
+            姓：<input type="text" v-model="f_name"><br/>
+            名：<input type="text" v-model="l_name"><br/>
+            姓名（计算属性_单向）：<input type="text" v-model="name_1"><br/>
+            姓名（监视_单向）：<input type="text" v-model="name_2"><br/>
+            姓名（双向）：<input type="text" v-model="name_3"><br/>
+            
+            <hr/>
+            演示缓存:
+            {{ name_1 }}, {{ name_2 }}, {{ name_3 }}
+        </div>
+        <script type="text/javascript">
+            // 创建实例
+            const vm = new Vue({
+                el: '#app',
+                data: {
+                    f_name: 'Vcr',
+                    l_name: 'Ting',
+                    name_2: 'Vcr - Ting', // 用于演示 监视
+                },
+                computed: { // 用于演示 计算属性
+                    name_1 () { //初始化时执行，相关的数据发生改变时执行
+                        return this.f_name + '' + this.l_name
+                        // f_name 与 l_name
+                    },
+                    // 双向关联需要添加 get 和 set 方法
+                    name_3: { // 回调函数的定义： 你定义的， 你没有调用， 但它最终执行了
+                        get() { // 当需要读取当前属性值时 执行回调
+                            // 计算并返回当前属性的值
+                            return this.f_name + ' --- ' + this.l_name;
+                        },
+                        set(val) { // 当属性值发生改变时 执行回调
+                            // val 就是 name_3 变化后的值
+                            const n = val.split(' --- ');
+                            this.f_name = n[0];
+                            this.l_name = n[1];
+                        }
+                    }
+                },
+                watch: { // 用于演示 监视
+                    f_name: function (new_val, old_val){ // f_name 发生了变化， 则执行这个方法
+                        this.name_2 = new_val + ' - ' + this.l_name
+                    }
+                }
+            });
+
+            // 使用实例 执行 监视方法
+            vm.$watch('l_name', function(new_val, old_val){
+                this.name_2 = this.f_name + ' # ' + new_val;
+            });
+        </script>
+    </body>
+</html>

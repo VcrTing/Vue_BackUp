@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>if, else, show</title>
+    </head>
+    <script src="../../jquery_3.min.js" type="text/javascript"></script>
+    <script src="../../vue/vue.js" type="text/javascript"></script>
+    <body>
+        <div id="app"><!-- VIEW -->
+            <h2>条件渲染</h2>
+            <p v-if="ok">超过了</p>
+            <p v-else="ok">没超过</p>
+            <p>v-show：使用的style="display:none"</p>
+            <p v-show="ok">v-show: 表白成功！！！</p>
+            <p v-show="!ok">v-show: 表白失败！！！</p>
+
+            <button @click="ok=!ok">切换 > ok=!ok</button>
+        </div>
+        <script type="text/javascript">
+            // 创建实例
+            const vm = new Vue({ // 配置对象
+                el: '#app', // 元素：选择器
+                data:{ // 数据（MODEL）
+                    ok: false,
+                }
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>01</title>
+    </head>
+    <script src="../../jquery_3.min.js" type="text/javascript"></script>
+    <script src="../../vue/vue.js" type="text/javascript"></script>
+    <body>
+        <!-- 引入自定义插件:hello.js -->
+        <!--script src="../my_plugin/hello.js" type="text/javascript"></script-->
+        <script type="text/javascript">
+            const MyPlugin = {};
+            MyPlugin.install = function (Vue, options) {
+                Vue.myGlobalMethod = function (){
+                    console.info('Vue函数对象的方法');
+                }
+                Vue.directive('my-directive', {
+                    bind (el, binding, vnode, old_vnode) {
+                        console.info('自定义指令');
+                        el.textContent = binding.value.toUpperCase();
+                    }
+                })
+                Vue.prototype.$my_method = function () {
+                    console.info('这是vue实例对象的方法');
+                }
+            }
+            window.MyPlugin = MyPlugin;
+        </script>
+        <div id="app"><!-- VIEW -->
+            <p v-my-directive="msg"></p>
+        </div>
+        <script type="text/javascript">
+            // 声明 使用 插件
+            Vue.use(MyPlugin); // 内部 会执行 MyPlugin.install(Vue)
+
+            Vue.myGlobalMethod();
+
+
+            // 创建实例
+            const vm = new Vue({ // 配置对象
+                el: '#app', // 元素：选择器
+                data:{ // 数据（MODEL）
+                    msg: 'VcrT',
+                }
+            });
+            vm.$my_method();
+        </script>
+    </body>
+</html>

@@ -1,0 +1,101 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>过渡与动画</title>
+        <style>
+            /*
+                指定 显示/隐藏 的过渡效果
+            */
+            .xxx-enter-active, .xxx-leave-active {
+                transition: opacity .5s;
+            }
+            .xxx-enter, .xxx-leave-to {
+                opacity: 0;
+            }
+            /*
+            */
+            .move-enter-active {
+                transition: all 1s;
+            }
+            .move-leave-active {
+                transition: all 3s;
+            }
+            .move-enter ,.move-leave-to{
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            /*
+            */
+            
+            .tst-enter-active  {
+                animation: bounce-in 1s;
+            }
+            .tst-leave-active{
+                animation: bounce-in 1s reverse;
+            }
+            @keyframes bounce-in {
+                0% {
+                    transform: scale(0);
+                }
+                50% {
+                    transform: scale(1.5);
+                }
+                100% {
+                    transform: scale(1);
+                }
+            }
+        </style>
+    </head>
+    <script src="../../jquery_3.min.js" type="text/javascript"></script>
+    <script src="../../vue/vue.js" type="text/javascript"></script>
+    <body>
+        <div id="app"><!-- VIEW -->
+            <button @click="is_show=!is_show">toggle</button>
+            <transition name="xxx">
+                <p v-show="is_show">Hello</p>
+            </transition>
+        </div>
+        <br/>
+        <div id="app2"><!-- VIEW -->
+            <button @click="is_show=!is_show">toggle</button>
+            <transition name="move">
+                <p v-show="is_show">Hello</p>
+            </transition>
+        </div>
+        <br/>
+        <div id="app3"><!-- VIEW -->
+            <button @click="is_show=!is_show">toggle</button>
+            <br/>
+            <transition name="tst">
+                <p v-show="is_show"
+                    style="background: pink; display: inline-block;">
+                    Hello VcrTing, You are very smart
+                </p>
+            </transition>
+        </div>
+        <script type="text/javascript">
+            // 创建实例
+            const vm = new Vue({ // 配置对象
+                el: '#app', // 元素：选择器
+                data:{ // 数据（MODEL）
+                    is_show: true,
+                }
+            });
+            // 创建实例
+            const vm2 = new Vue({ // 配置对象
+                el: '#app2', // 元素：选择器
+                data:{ // 数据（MODEL）
+                    is_show: true,
+                }
+            });
+            // 创建实例
+            const vm3 = new Vue({ // 配置对象
+                el: '#app3', // 元素：选择器
+                data:{ // 数据（MODEL）
+                    is_show: true,
+                }
+            });
+        </script>
+    </body>
+</html>

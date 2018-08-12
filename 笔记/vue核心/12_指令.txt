@@ -1,0 +1,44 @@
+
+---------------------------------------- VcrT ----------------------------------------
+内置指令:
+    v:text = 更新元素的textContent
+    v-html = 更新元素的innerHTML
+    v-if = 如果为true，标签才会输出到页面
+    v-else
+    v-show
+    v-on = 绑定事件监听
+    v-bind = 强制绑定解析表达式，可以省略 v-bind
+    v-model = 双向数据绑定
+    ref = 指定唯一标识
+    v-cloak = 防止闪现，与css配合
+        就是{{ msg }}未解析并且加载完，就不显示出来
+        例子:
+            <style>
+                [v-clock] {
+                    display: none;
+                }
+            </style>
+            <p v-cloak="">{{ msg }}</p>
+
+---------------------------------------- VcrT ----------------------------------------
+自定义指令:
+    //定义全局指令
+    Vue.directive('text-upper', function (el, binding) {
+        // el = <p></p> 指令属性所在的标签对象
+        // binding 是包含指令属性相关的对象
+        el.textContent = binding.value.toUpperCase();
+    });
+    要放在vue实例的前面
+
+    // 定义局部指令
+    directives: { 
+        /*
+        'text-lower': function (el, binding) { // 完整写法
+            el.textContent = binding.value.toLowerCase();
+        }
+        */
+        'text-lower' (el, binding) { // 省略写法
+            el.textContent = binding.value.toLowerCase();
+        }
+    }
+    局部指令只在当前 el 内有效

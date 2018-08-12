@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>事件处理</title>
+    </head>
+    <script src="../../jquery_3.min.js" type="text/javascript"></script>
+    <script src="../../vue/vue.js" type="text/javascript"></script>
+    <body>
+        <div id="app"><!-- VIEW -->
+            <h2>绑定监听：</h2>
+            <button @click="test_1()">$event 代表事件对象，可以省略</button>
+            <button @click="test_2('aaa', $event)">$event 与其他参数一起被传递</button>
+            <h2>事件修饰符：</h2>
+            <div style="width: 200px; height: 200px; background-color: pink;" 
+                @click="test_3">
+                <div style="width: 100px; height: 100px; background-color: blue;" 
+                    @click.stop="test_4">
+                    
+                </div>
+            </div>
+            <a href="http://www.baidu.com" @click="test_5">这个a标签，我不想去百度</a>
+            <h2>按键修饰符：</h2>
+            <input type="text" @keyup.65="test_6" value="按a键">
+            <input type="text" @keyup.enter="test_6" value="按Enter键">
+        </div>
+        <script type="text/javascript">
+            // 创建实例
+            const vm = new Vue({ // 配置对象
+                el: '#app', // 元素：选择器
+                data:{ // 数据（MODEL）
+                    vcr: 'VcrT',
+                },
+                methods: {
+                    test_1 (event) { // 演示 $event
+                        alert(event.target.innerHTML);
+                    },
+                    test_2 (msg, event) { // 演示 带其他参数 以及 $event参数
+                        alert(msg, event.target.innerHTML);
+                    },
+                    test_3 () {
+                        alert('外部');
+                    },
+                    test_4 (event) {
+                        // event.stopProgration() // 阻止事件冒泡
+                        alert('内部');
+                    },
+                    test_5 (event) {
+                        // event.preventDefault() // 阻止 a 标签跳转 也称 阻止事件行为
+                        alert('没有去百度');
+                    },
+                    test_6 (event) {
+                        /*
+                        if(event.keyCode === 13){
+                            alert(event.target.value + ' ' + event.keyCode);
+                        }*/
+                        alert(event.target.value + ' ' + event.keyCode);
+                    }
+                }
+            });
+            vm.vcr = 'VcrTing'
+        </script>
+    </body>
+</html>

@@ -1,0 +1,81 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>列表搜索 与 排列</title>
+    </head>
+    <script src="../../jquery_3.min.js" type="text/javascript"></script>
+    <script src="../../vue/vue.js" type="text/javascript"></script>
+    <body>
+        <div id="app"><!-- VIEW -->
+            <h2>搜索：<input type="text" v-model="search_name"></h2>
+            <ul>           
+                <li v-for="(val, index) in filter_persons" :key="index">
+                    {{ index }}, {{ val.name }}, {{ val.age }}
+                     --- <button @click="del(index)">删除</button>
+                     --- <button @click="upd(index, {name: 'VcrTing', age: 17})">更新</button>
+                </li>
+            </ul>
+            <button @click="set_order_type(1);">按年龄升序</button>
+            <button @click="set_order_type(2);">按年龄降序</button>
+            <button @click="set_order_type(0);">原本顺序</button>
+        </div>
+        <script type="text/javascript">
+            // 创建实例
+            const vm = new Vue({ // 配置对象
+                el: '#app', // 元素：选择器
+                data:{ // 数据（MODEL）
+                    search_name: '', // 演示搜索
+                    order_type: 0, // 0 原本顺序 1 升序 2 降序
+                    persons: [ // 只是监视的 persons ，而没有监视 persons 内部的数据
+                        {'name': 'VcrT', 'age': 19},
+                        {'name': 'Tom', 'age': 23},
+                        {'name': 'Lucy', 'age': 20},
+                        {'name': 'Jack', 'age': 25},
+                    ],
+                },
+                computed: {
+                    filter_persons () { // 搜索的计算属性
+                        // 取出相关的数据
+                        const {search_name, order_type, persons} = this;
+                        let rel_persons;
+
+                        // 对数组进行过滤
+                        rel_persons = persons.filter(p => p.name.indexOf(search_name) !== -1);
+
+                        // 排序
+                        if(order_type != 0){
+                            rel_persons.sort(function(p1, p2){ // 如果返回正数 p2 在前
+                                // 升序
+                                if(order_type === 2){
+                                    return p2.age - p1.age
+                                }
+                                else{
+                                    return p1.age - p2.age
+                                }
+                            });
+                        }
+
+                        // 返回结果
+                        return rel_persons;
+                    }
+                },
+                methods: {
+                    del(index) {
+                        this.persons.splice(index, 1);
+                    },
+                    upd(index, new_person) {
+                        // this.persons[index] = new_person; // 并未改变 persons 本身， 而是改变的数组内部的 数据， 没有调用变异方法， vue就不会更新界面
+                        
+                        // splice() 可以 实现 增 删 改
+                        this.persons.splice(index, 1, new_person); // 改变了 persons ， 然后发挥数据绑定的作用
+                    },
+                    set_order_type(order_type) {
+                        this.order_type = order_type;
+                    }
+                }
+            });
+            vm.vcr = 'VcrTing'
+        </script>
+    </body>
+</html>

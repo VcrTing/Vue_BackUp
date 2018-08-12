@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>class 与 style 绑定</title>
+    </head>
+    <script src="../../jquery_3.min.js" type="text/javascript"></script>
+    <script src="../../vue/vue.js" type="text/javascript"></script>
+    <body>
+        <style>
+            .p1{
+                color: pink;
+            }
+            .p2{
+                color: aqua;
+            }
+            .p3{
+                font-size: 20px;
+            }
+        </style>
+        <div id="app"><!-- VIEW -->
+            <h2>class 绑定：</h2>
+            class，字符串变为数组：<p :class="class_1">class_1</p>
+            class，为对象：<p :class="{p1: is_p1, p3: is_p3}">class_1</p>
+            <button @click="update">更新</button>
+
+            <hr/>
+            <h2>style 控制：</h2>
+            <!--p v-bind:style="{ color: the_color, font-size: the_size + 'px' }">qqq</p-->
+        </div>
+        <script type="text/javascript">
+            // 创建实例
+            const vm = new Vue({ // 配置对象
+                el: '#app', // 元素：选择器
+                data:{ // 数据（MODEL）
+                    class_1: 'p1',
+                    is_p1: true,
+                    is_p3: false,
+                    the_color: 'yellow',
+                    the_size: 30,
+                },
+                methods: {
+                    update() {
+                        this.class_1 = ['p2', 'p3'];
+                        this.is_p1 = false;
+                        this.is_p3 = true;
+                        this.the_color = 'blue';
+                        this.the_size = 36;
+                    }
+                }
+            });
+            vm.vcr = 'VcrTing'
+        </script>
+    </body>
+</html>
